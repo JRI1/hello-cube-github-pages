@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello-cube</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/102/three.js"></script>
+<script>
+
+var camera, scene, renderer;
+var geometry, material, mesh;
+
+function init() {
+		//Szene
+		scene = new THREE.Scene();
+
+		//Kamera
+		camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 10 );
+		camera.position.z = 0.5;
+
+
+		//renderer
+		renderer = new THREE.WebGLRenderer( { antialias: true } );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		renderer.setClearColor("#202731");
+		renderer.setPixelRatio(window.devicePixelRatio);
+		document.body.appendChild( renderer.domElement );
+
+		//Würfel
+		geometry = new THREE.BoxGeometry( 0.2, 0.2, 0.2 );
+		material = new THREE.MeshStandardMaterial( { color: 0xD94C1A} );
+		mesh = new THREE.Mesh( geometry, material );
+		scene.add( mesh );
+
+		//Licht
+		var light = new THREE.PointLight(0xFAFAFA, 2, 0)
+        light.position.set(50,100,200);
+        scene.add(light);
+
+	}
+
+//animation
+function animate() {
+
+		requestAnimationFrame( animate );
+
+		mesh.rotation.x += 0.009;
+		mesh.rotation.y += 0.009;
+
+		renderer.render( scene, camera );
+	}
+
+	//responsiv
+window.addEventListener('resize', () => {
+        renderer.setSize(window.innerWidth,window.innerHeight);
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+	});
+
+init();
+animate();
+</script>
+
+
+
+
+
+
+</body>
+</html>
